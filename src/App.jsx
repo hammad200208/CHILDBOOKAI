@@ -1,6 +1,9 @@
 import './App.css'
 import Navbar from './components/reusable/Navbar'
 import Hero from "./components/HeroSection/Hero"
+import Templates from './components/TemplateSection/Templates'
+import Love from './components/LoveSection/Love'
+
 
 
 function App() {
@@ -12,6 +15,8 @@ function App() {
     <Navbar />
     <Hero />
     </div>
+    <Templates />
+    <Love />
     </>
   )
 }

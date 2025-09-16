@@ -33,7 +33,7 @@ const Hero = () => {
     <section className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 px-6 md:px-20 py-16">
       {/* Left Side */}
       <div className="text-left md:text-left space-y-6">
-        <h1 className="text-2xl md:text-5xl font-bold text-black leading-snug">
+        <h1 className="text-2xl md:text-4xl font-bold text-black leading-snug">
           Create a personalized book in which{" "}
           <span className="font-extrabold">you</span> are the main character
         </h1>
