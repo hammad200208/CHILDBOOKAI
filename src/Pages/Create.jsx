@@ -1,66 +1,74 @@
 // src/pages/Create.jsx
-import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import React, { useState } from "react";
+import Footer from "../components/reusable/Footer";
+import { generateBook } from "../services/api";
 
 const Create = () => {
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+
+  const onGenerate = async () => {
+    if (!prompt.trim()) return alert("Please enter a prompt");
+    setLoading(true);
+    setResult(null);
+    try {
+      const data = await generateBook(prompt, 1); // 1 image by default
+      setResult(data); // { story, images: [...] }
+    } catch (err) {
+      console.error(err);
+      alert("Failed: " + (err.message || err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      {/* Navbar */}
-      <Navbar />
-
-      {/* Main Section */}
       <section className="py-16 px-6 bg-gray-50 min-h-screen">
-        {/* Heading */}
-        <h1 className="text-3xl md:text-4xl font-bold text-center">
-          Create your first children's book
-        </h1>
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-3xl md:text-4xl font-bold">
+            Create your first children's book
+          </h1>
+          <p className="mt-3 text-gray-600">
+            Give a short prompt and our AI will generate a story and an illustration.
+          </p>
 
-        {/* Subheading */}
-        <p className="text-center mt-3 text-gray-600">
-          Pick one of the features below to create your first children's book
-        </p>
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            rows={4}
+            className="w-full mt-6 p-3 border rounded-lg"
+            placeholder="e.g. A friendly dragon learns to share candies with children"
+          />
 
-        {/* Cards */}
-        <div className="mt-12 max-w-5xl mx-auto grid sm:grid-cols-2 gap-8">
-          {/* Card 1 */}
-          <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
-            <img
-              src="/like1.png"
-              alt="Create a book"
-              className="w-28 h-28 object-contain mb-4"
-            />
-            <h3 className="text-xl font-semibold">Create a book</h3>
-            <p className="mt-3 text-gray-600 text-sm">
-              Create a book with just a short title and description – text and
-              illustrations will be created by our AI.
-            </p>
-            <button className="mt-6 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-2 px-4 rounded-lg transition">
-              Create a Book
-            </button>
-          </div>
-
-          {/* Card 2 */}
-          <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
-            <img
-              src="/like2.png"
-              alt="Book template"
-              className="w-28 h-28 object-contain mb-4"
-            />
-            <h3 className="text-xl font-semibold">
-              Create a book from template
-            </h3>
-            <p className="mt-3 text-gray-600 text-sm">
-              Create a book based on a selection of predefined templates.
-            </p>
-            <button className="mt-6 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-2 px-4 rounded-lg transition">
-              Create a book from one of our templates
-            </button>
-          </div>
+          <button
+            onClick={onGenerate}
+            disabled={loading}
+            className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
+          >
+            {loading ? "Generating..." : "Generate Story + Image"}
+          </button>
         </div>
+
+        {/* Result */}
+        {result && (
+          <div className="mt-10 max-w-4xl mx-auto bg-white p-6 rounded-xl shadow">
+            {result.images?.[0] && (
+              <img
+                src={result.images[0]}
+                alt="Generated illustration"
+                className="w-full h-[480px] object-cover rounded-md mb-6"
+              />
+            )}
+
+            <div className="prose max-w-none">
+              <pre className="whitespace-pre-wrap">{result.story}</pre>
+            </div>
+          </div>
+        )}
       </section>
 
-      {/* Footer */}
       <Footer />
     </>
   );
