@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // ✅ Import navigation
 
 const Hero = () => {
   const images = ["/bookhero.webp", "/bookhero1.webp", "/bookhero2.webp"];
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate(); // ✅ Init navigate hook
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,7 +22,7 @@ const Hero = () => {
   return (
     <section
       className="relative grid grid-cols-1 md:grid-cols-2 items-center gap-10 px-6 md:px-20 py-16 bg-cover bg-center"
-      style={{ backgroundImage: "url('/bg.png')" }} // <-- Your background image
+      style={{ backgroundImage: "url('/bg.jpg')" }}
     >
       {/* Left Side */}
       <div className="space-y-6 text-left">
@@ -44,10 +46,19 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
-          <button className="bg-yellow-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">
+          {/* ✅ Navigate to Create.jsx */}
+          <button
+            onClick={() => navigate("/create")}
+            className="bg-yellow-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition"
+          >
             Create a Book
           </button>
-          <button className="bg-blue-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition">
+
+          {/* ✅ Navigate to Guide.jsx */}
+          <button
+            onClick={() => navigate("/guide")}
+            className="bg-blue-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition"
+          >
             Go to Guide
           </button>
         </div>

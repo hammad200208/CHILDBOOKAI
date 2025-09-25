@@ -8,6 +8,7 @@ import Templates from "./components/TemplateSection/Templates";
 import Love from "./components/LoveSection/Love";
 import Like from "./components/LikeToDoSection/Like";
 import Create from "./Pages/Create";
+import Guide from "./Pages/Guide";
 
 const Home = () => (
   <>
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/guide" element={<Guide />} />
       </Routes>
     </BrowserRouter>
   );
