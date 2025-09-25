@@ -13,8 +13,8 @@ const Create = () => {
     setLoading(true);
     setResult(null);
     try {
-      const data = await generateBook(prompt, 1); // 1 image by default
-      setResult(data); // { story, images: [...] }
+      const data = await generateBook(prompt);
+      setResult(data);
     } catch (err) {
       console.error(err);
       alert("Failed: " + (err.message || err));
@@ -25,45 +25,51 @@ const Create = () => {
 
   return (
     <>
-      <section className="py-16 px-6 bg-gray-50 min-h-screen">
+      <section className="py-16 px-6 bg-gradient-to-b from-yellow-50 to-white min-h-screen">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl font-bold">
-            Create your first children's book
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800">
+            Create Your First Children’s Book ✨
           </h1>
-          <p className="mt-3 text-gray-600">
-            Give a short prompt and our AI will generate a story and an illustration.
+          <p className="mt-3 text-gray-600 text-lg">
+            Give a short prompt and our AI will generate a magical story and an
+            illustration just for you.
           </p>
 
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             rows={4}
-            className="w-full mt-6 p-3 border rounded-lg"
+            className="w-full mt-6 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-yellow-400 focus:outline-none resize-none"
             placeholder="e.g. A friendly dragon learns to share candies with children"
           />
 
           <button
             onClick={onGenerate}
             disabled={loading}
-            className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
+            className="mt-5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-3 rounded-full shadow-md transition-transform transform hover:scale-105 disabled:opacity-60"
           >
-            {loading ? "Generating..." : "Generate Story + Image"}
+            {loading ? "Generating..." : "✨ Generate Story + Image"}
           </button>
         </div>
 
         {/* Result */}
         {result && (
-          <div className="mt-10 max-w-4xl mx-auto bg-white p-6 rounded-xl shadow">
-            {result.images?.[0] && (
-              <img
-                src={result.images[0]}
-                alt="Generated illustration"
-                className="w-full h-[480px] object-cover rounded-md mb-6"
-              />
+          <div className="mt-12 max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-xl">
+            {result.image && (
+              <div className="overflow-hidden rounded-lg shadow-md mb-6">
+                <img
+                  src={result.image}
+                  alt="Generated illustration"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
             )}
 
-            <div className="prose max-w-none">
-              <pre className="whitespace-pre-wrap">{result.story}</pre>
+            <div className="text-left">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-800">📖 Story</h2>
+              <p className="whitespace-pre-wrap leading-relaxed text-gray-700 text-lg">
+                {result.story}
+              </p>
             </div>
           </div>
         )}
