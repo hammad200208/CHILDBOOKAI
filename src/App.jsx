@@ -28,6 +28,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/create" element={<Create />} />
         <Route path="/guide" element={<Guide />} />
+        <Route path="/price" element={<PromiseRejectionEvent.jsx />} />
       </Routes>
     </BrowserRouter>
   );
