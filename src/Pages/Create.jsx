@@ -1,12 +1,21 @@
-// src/pages/Create.jsx
-import React, { useState } from "react";
+// src/Pages/Create.jsx
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"; // ⬅️ to receive data from Templates
 import Footer from "../components/reusable/Footer";
 import { generateBook } from "../services/api";
 
 const Create = () => {
+  const location = useLocation();
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+
+  // ✅ Prefill prompt if coming from Templates.jsx
+  useEffect(() => {
+    if (location.state?.prompt) {
+      setPrompt(location.state.prompt);
+    }
+  }, [location.state]);
 
   const onGenerate = async () => {
     if (!prompt.trim()) return alert("Please enter a prompt");

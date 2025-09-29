@@ -1,4 +1,4 @@
-// src/pages/Guide.jsx
+// src/Pages/Guide.jsx
 import React from "react";
 import Footer from "../components/reusable/Footer";
 import { Link } from "react-router-dom";

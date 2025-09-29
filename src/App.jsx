@@ -9,6 +9,8 @@ import Love from "./components/LoveSection/Love";
 import Like from "./components/LikeToDoSection/Like";
 import Create from "./Pages/Create";
 import Guide from "./Pages/Guide";
+import Price from "./Pages/Price";
+import Template from  "./Pages/Template"
 
 const Home = () => (
   <>
@@ -28,7 +30,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/create" element={<Create />} />
         <Route path="/guide" element={<Guide />} />
-        <Route path="/price" element={<PromiseRejectionEvent.jsx />} />
+        <Route path="/pricing" element={<Price />} />
+        <Route path="/templates" element={<Template />} />
       </Routes>
     </BrowserRouter>
   );

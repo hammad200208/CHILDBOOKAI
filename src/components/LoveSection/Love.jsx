@@ -1,7 +1,9 @@
 // src/components/Love.jsx
 import React from "react";
-
+import { useNavigate } from "react-router-dom"; 
+ 
 const Love = () => {
+  const navigate = useNavigate();
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 px-6 md:px-20 py-16">
       {/* Left Side - Content */}
@@ -26,10 +28,14 @@ const Love = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
-          <button className="bg-yellow-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">
+          <button
+            onClick={() => navigate("/create")}
+           className="bg-yellow-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">
             Create a Book
           </button>
-          <button className="bg-blue-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition">
+          <button
+            onClick={() => navigate("/guide")}
+           className="bg-blue-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition">
             Go to Guide
           </button>
         </div>
