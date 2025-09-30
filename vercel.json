@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "https://childbookai-backend.vercel.app/api/$1"
+      "dest": "https://childbookai.vercel.app/api/book/generate/$1"
     }
   ]
 }

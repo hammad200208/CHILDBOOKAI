@@ -53,23 +53,30 @@ const Navbar = () => {
 
       {/* Desktop Right Side */}
       <div className="hidden md:flex items-center gap-6 font-medium">
-        {/* Cart */}
         <FaShoppingCart className="text-black hover:text-yellow-500 text-xl cursor-pointer transition" />
 
-        {/* Show Login / Logout based on state */}
-        {isLoggedIn ? (
+        {/* Register always visible */}
+        <Link
+          to="/register"
+         className="text-black hover:text-yellow-500 transition cursor-pointer">
+          REGISTER
+        </Link>
+
+        {/* Login / Logout */}
+        {!isLoggedIn ? (
+          <Link
+            to="/login"
+            onClick={() => setIsLoggedIn(true)}
+            className="text-black hover:text-yellow-500 transition cursor-pointer"
+          >
+            LOGIN
+          </Link>
+        ) : (
           <button
             onClick={() => setIsLoggedIn(false)}
             className="text-black hover:text-yellow-500 transition cursor-pointer"
           >
             LOGOUT
-          </button>
-        ) : (
-          <button
-            onClick={() => setIsLoggedIn(true)}
-            className="text-black hover:text-yellow-500 transition cursor-pointer"
-          >
-            LOGIN
           </button>
         )}
       </div>
@@ -110,17 +117,18 @@ const Navbar = () => {
             <FaBookOpen /> TEMPLATES
           </Link>
 
-          {isLoggedIn ? (
-            <button
-              onClick={() => {
-                setIsLoggedIn(false);
-                setMenuOpen(false);
-              }}
-              className="text-black hover:text-yellow-500 transition cursor-pointer"
-            >
-              LOGOUT
-            </button>
-          ) : (
+          {/* Register always visible */}
+          <Link
+            to="/register"
+            className="text-black hover:text-yellow-500 transition cursor-pointer"
+            onClick={() => setMenuOpen(false)}
+          >
+            REGISTER
+          
+          </Link>
+
+          {/* Login / Logout */}
+          {!isLoggedIn ? (
             <button
               onClick={() => {
                 setIsLoggedIn(true);
@@ -129,6 +137,16 @@ const Navbar = () => {
               className="text-black hover:text-yellow-500 transition cursor-pointer"
             >
               LOGIN
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setIsLoggedIn(false);
+                setMenuOpen(false);
+              }}
+              className="text-black hover:text-yellow-500 transition cursor-pointer"
+            >
+              LOGOUT
             </button>
           )}
         </div>

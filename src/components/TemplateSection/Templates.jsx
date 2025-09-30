@@ -1,8 +1,10 @@
 // src/components/Templates.jsx
 import React, { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Templates = () => {
+  const navigate = useNavigate();
   const images = ["/template1.webp", "/template2.webp", "/template3.webp", "/template4.webp"];
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -63,10 +65,16 @@ const Templates = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
-          <button className="bg-yellow-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">
+          <button
+            onClick={() => navigate("/templates")}
+            className="bg-yellow-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition"
+          >
             Go to Book Templates
           </button>
-          <button className="bg-blue-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition">
+          <button
+            onClick={() => navigate("/guide")}
+            className="bg-blue-300 text-black px-6 py-3 rounded-lg font-semibold hover:bg-blue-400 transition"
+          >
             Go to Guide
           </button>
         </div>

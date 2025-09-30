@@ -1,6 +1,7 @@
 // src/Pages/Templates.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/reusable/Footer"; // make sure path is correct
 
 const Template = () => {
   const navigate = useNavigate();
@@ -27,45 +28,51 @@ const Template = () => {
   ];
 
   return (
-    <section className="py-16 px-6 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800">
-          Story Templates
-        </h2>
-        <p className="mt-3 text-gray-600 text-lg">
-          Pick a template to quickly start creating your magical story.
-        </p>
+    <div className="flex flex-col min-h-screen">
+      {/* Main Section */}
+      <section className="flex-grow py-16 px-6 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800">
+            Story Templates
+          </h2>
+          <p className="mt-3 text-gray-600 text-lg">
+            Pick a template to quickly start creating your magical story.
+          </p>
 
-        <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          {templates.map((template, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-2 p-6 flex flex-col border border-gray-100"
-            >
-              <img
-                src={template.image}
-                alt={template.title}
-                className="w-full h-44 object-cover rounded-lg shadow-sm"
-              />
-              <h3 className="text-xl font-semibold mt-4 text-gray-800">
-                {template.title}
-              </h3>
-              <p className="text-gray-600 mt-2 flex-grow">
-                {template.description}
-              </p>
-              <button
-                onClick={() =>
-                  navigate("/create", { state: { prompt: template.prompt } })
-                }
-                className="mt-5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-6 py-3 rounded-full shadow-md transition-transform transform hover:scale-105"
+          <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            {templates.map((template, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-2 p-6 flex flex-col border border-gray-100"
               >
-                ✨ Use Template
-              </button>
-            </div>
-          ))}
+                <img
+                  src={template.image}
+                  alt={template.title}
+                  className="w-full h-44 object-cover rounded-lg shadow-sm"
+                />
+                <h3 className="text-xl font-semibold mt-4 text-gray-800">
+                  {template.title}
+                </h3>
+                <p className="text-gray-600 mt-2 flex-grow">
+                  {template.description}
+                </p>
+                <button
+                  onClick={() =>
+                    navigate("/create", { state: { prompt: template.prompt } })
+                  }
+                  className="mt-5 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-6 py-3 rounded-full shadow-md transition-transform transform hover:scale-105"
+                >
+                  ✨ Use Template
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Footer */}
+      <Footer />
+    </div>
   );
 };
 

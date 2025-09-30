@@ -11,6 +11,8 @@ import Create from "./Pages/Create";
 import Guide from "./Pages/Guide";
 import Price from "./Pages/Price";
 import Template from  "./Pages/Template"
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
 
 const Home = () => (
   <>
@@ -32,6 +34,8 @@ function App() {
         <Route path="/guide" element={<Guide />} />
         <Route path="/pricing" element={<Price />} />
         <Route path="/templates" element={<Template />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
