@@ -2,6 +2,9 @@
 const LOCAL_BASE = "http://localhost:5000/api";
 const PROD_BASE = "https://childbookai.vercel.app/api"; 
 const BASE_URL = import.meta.env.MODE === "development" ? LOCAL_BASE : PROD_BASE;
+console.log("🔎 MODE:", import.meta.env.MODE);
+console.log("🔎 BASE_URL:", BASE_URL);
+
 
 // --- Helper to handle responses ---
 const handleResponse = async (response) => {
