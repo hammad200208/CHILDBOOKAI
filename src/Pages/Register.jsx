@@ -1,6 +1,8 @@
+// src/Pages/Register.jsx
 import React, { useState } from "react";
 import Footer from "../components/reusable/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../services/api"; // ✅ import API function
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,24 +12,44 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setMessage("Passwords do not match!");
       return;
     }
-    console.log("Register Data:", formData);
-    alert("Registered Successfully!");
-    // Add your registration API call here
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await registerUser(formData); // ✅ call backend API
+      setMessage("Registration successful! Please login.");
+      
+      // ✅ save user info only (since no token)
+      localStorage.setItem("user", JSON.stringify(response.user));
+
+      // redirect user to login page after register
+      setTimeout(() => navigate("/login"), 1500);
+    } catch (err) {
+      setMessage(err.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gray-100 px-4">
-      {/* Main Section with padding top/bottom */}
+      {/* Main Section */}
       <div className="flex-grow flex justify-center py-16">
         <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
@@ -107,11 +129,16 @@ const Register = () => {
             {/* Register Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition font-semibold"
             >
-              REGISTER
+              {loading ? "Registering..." : "REGISTER"}
             </button>
           </form>
+
+          {message && (
+            <p className="mt-4 text-center text-red-500 font-medium">{message}</p>
+          )}
 
           {/* Login Redirect */}
           <p className="text-center text-gray-600 mt-4">

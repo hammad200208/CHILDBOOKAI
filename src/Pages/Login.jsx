@@ -1,12 +1,17 @@
 // src/Pages/Login.jsx
 import React, { useState } from "react";
 import Footer from "../components/reusable/Footer";
+import { loginUser } from "../services/api"; // import API function
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -15,10 +20,27 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
-    // TODO: Add login API call here
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await loginUser(formData); // { message, token }
+
+      // ✅ Save auth token
+      localStorage.setItem("authToken", response.token);
+
+      // ✅ Save user email for session reference
+      localStorage.setItem("userEmail", formData.email);
+
+      setMessage("Login successful!");
+      navigate("/create"); // redirect to Create.jsx
+    } catch (err) {
+      setMessage(err.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,6 +56,7 @@ const Login = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+            {/* Email */}
             <div>
               <label
                 htmlFor="email"
@@ -53,6 +76,7 @@ const Login = () => {
               />
             </div>
 
+            {/* Password */}
             <div>
               <label
                 htmlFor="password"
@@ -72,20 +96,29 @@ const Login = () => {
               />
             </div>
 
+            {/* Login Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
+
+          {message && (
+            <p className="mt-4 text-center text-red-500 font-medium">{message}</p>
+          )}
 
           {/* Register Link */}
           <p className="mt-6 text-center text-gray-600">
             Don’t have an account?{" "}
-            <a href="/register" className="text-yellow-500 hover:underline font-semibold">
+            <Link
+              to="/register"
+              className="text-yellow-500 hover:underline font-semibold"
+            >
               Register here
-            </a>
+            </Link>
           </p>
         </div>
       </section>
